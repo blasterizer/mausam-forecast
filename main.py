@@ -1,10 +1,10 @@
 import streamlit as st
-import plotly.express as px
+from plotly import express
 from backend import get_data
 
 # Add title, input text, slider and subheader
 st.title("मौसम - Forecast App")
-place = st.text_input("Enter a City")
+place = st.text_input("Enter a Country / City")
 days = st.slider("Forecast Days", min_value=1, max_value=5, help="Please slide for knowing more forecast dates")
 option = st.selectbox("Select data to view",
                       ("Temperature", "Sky"))
@@ -18,7 +18,7 @@ if place:
     if option == "Temperature":
         temperatures = [dict["main"]["temp"] for dict in filtered_data]
         dates = [dict["dt_txt"] for dict in filtered_data]
-        figure = px.line(x=dates, y=temperatures, labels={"x": "Dates", "y": "Temperatures (C)"})
+        figure = express.line(x=dates, y=temperatures, labels={"x": "Dates", "y": "Temperatures (C)"})
         st.plotly_chart(figure)
 
     if option == "Sky":
